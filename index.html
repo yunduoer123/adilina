@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南山大学 - 校园BBS</title>
+    <style>
+        /* 基础样式 */
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 0; transition: 0.3s; }
+        
+        /* 登录界面样式 */
+        #loginPage { height: 100vh; display: flex; justify-content: center; align-items: center; background: #1a365d; }
+        .login-box { background: white; padding: 40px; border-radius: 8px; width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: center; }
+        .login-box h2 { margin-top: 0; color: #1a365d; }
+        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .login-box button { width: 100%; padding: 12px; background: #2b6cb0; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .login-box button:hover { background: #2c5282; }
+        
+        /* 论坛主页样式 */
+        #forumPage { display: none; padding: 20px; max-width: 850px; margin: 0 auto; }
+        .header { background-color: #1a365d; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; margin-bottom: 20px; }
+        .header h2 { margin: 0; font-size: 20px; }
+        .post { background: white; border-radius: 8px; margin-bottom: 15px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; }
+        .post:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .post-title { font-weight: bold; font-size: 16px; color: #2d3748; margin-bottom: 8px; }
+        .post-meta { font-size: 12px; color: #a0aec0; margin-bottom: 10px; }
+        .post-content { font-size: 14px; color: #4a5568; line-height: 1.5; }
+        .tag-hot { background: #fed7d7; color: #c53030; padding: 2px 6px; border-radius: 4px; font-size: 12px; margin-right: 8px; }
+        .tag-notice { background: #bee3f8; color: #2b6cb0; padding: 2px 6px; border-radius: 4px; font-size: 12px; margin-right: 8px; }
+        
+        /* 黑客解密终端样式 */
+        #hackerPage { display: none; background: #000; color: #0f0; font-family: monospace; min-height: 100vh; padding: 40px; box-sizing: border-box; }
+        .terminal { max-width: 700px; margin: 0 auto; border: 1px solid #0f0; padding: 30px; box-shadow: 0 0 15px rgba(0,255,0,0.2); }
+        .terminal input { background: #000; color: #0f0; border: 1px solid #0f0; padding: 10px; width: 70%; outline: none; font-family: monospace; }
+        .terminal button { background: #0f0; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; font-family: monospace; }
+        .hidden-data { display: none; margin-top: 20px; border-top: 1px dashed #0f0; padding-top: 20px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. 登录页面 -->
+    <div id="loginPage">
+        <div class="login-box">
+            <h2>南山大学 · 校园网</h2>
+            <p style="font-size: 12px; color: #666;">请使用学号登录 (任意输入，请记住你的学号)</p>
+            <input type="text" id="username" placeholder="学号 (例如: 20240123)" maxlength="12">
+            <input type="password" id="password" placeholder="密码">
+            <button onclick="fakeLogin()">登录系统</button>
+        </div>
+    </div>
+
+    <!-- 2. 论坛主页 -->
+    <div id="forumPage">
+        <div class="header">
+            <h2>南山大学 · BBS</h2>
+            <span id="userDisplay" style="font-size: 14px;"></span>
+        </div>
+        
+        <div class="post">
+            <div class="post-title"><span class="tag-notice">校园</span> 食堂今天的糖醋里脊到底加了什么？吃完我直接灵魂出窍</div>
+            <div class="post-meta">楼主: 匿名 | 刚刚</div>
+            <div class="post-content">如题，不仅颜色像荧光粉，吃完我竟然看到一只长着翅膀的粉色猪在向我招手。白衣天使们，这是正常的吗？</div>
+        </div>
+
+        <div class="post">
+            <div class="post-title">【求助】大一的灵力基础课快挂科了，有没有大佬捞捞？</div>
+            <div class="post-meta">楼主: 弱小可怜又无助 | 30分钟前</div>
+            <div class="post-content">听说期末考试的监考是纪检部的伍家人，连作弊的念头都不敢有。现在每天在图书馆肝到凌晨，头发都要掉光了。救救孩子吧，求一份往年真题！</div>
+        </div>
+
+        <div class="post">
+            <div class="post-title">【吃瓜】惊！学生会长林心晖学长昨天在礼堂发言时，袖口里掉出来一个小药瓶？</div>
+            <div class="post-meta">楼主: 情报贩子 | 2小时前</div>
+            <div class="post-content">有眼尖的同学看到了吗？瓶子上好像有个类似于林家族徽的印记，学长看起来身体不太好啊。</div>
+        </div>
+
+        <div class="post" onclick="goToHackerPage()" style="border: 2px dashed #e53e3e;">
+            <div class="post-title" style="color: #c53030;"><span class="tag-hot">绝密</span> 【加密档案】关于近日学院后山异常灵力波动的调查</div>
+            <div class="post-meta">楼主: 学生会暗线 | 1小时前</div>
+            <div class="post-content" style="color: #666;">信息不便公开。请点此进入隔离终端。提示：访问密码为您的“学号后四位”。</div>
+        </div>
+        
+        <div class="post">
+            <div class="post-title">【闲聊】如果姬家学长半夜三点给你发作业催交邮件，你们怎么回？</div>
+            <div class="post-meta">楼主: 熬夜冠军 | 4小时前</div>
+            <div class="post-content">我回了个“收到”，他给我发了个“还没睡？出来加练”。我现在人在训练场，感觉快死了，谁能来救救我。</div>
+        </div>
+    </div>
+
+    <!-- 3. 黑客解密页面 -->
+    <div id="hackerPage">
+        <div class="terminal">
+            <h2 style="text-align: center;">[ 南山大学 - 隔离终端 ]</h2>
+            <p>检测到高级权限访问请求。该档案已上锁。</p>
+            <p style="font-size: 12px; color: #888;">> 提示：请输入您的学号后四位进行身份校验。</p>
+            
+            <input type="text" id="secretPwd" placeholder="输入学号后四位...">
+            <button onclick="verifyPwd()">验证</button>
+            
+            <div class="hidden-data" id="secretData">
+                <p>> 校验通过。正在解密...</p>
+                <p>【机密情报】：</p>
+                <p>1. 梅家秘宝“石制龙雕”只是一枚伪造的棋子，真正让时间变慢的，是梅家直系血脉流失的生命力。</p>
+                <p>2. 转学生“阿狄”体内被检测出与龙雕高度相似的灵力波动，她可能不是人。</p>
+                <p>3. 警告：最近学院里的“野生御灵暴动”绝非偶然，有人在故意撕裂结界。请学生会各部门提高警惕，切勿打草惊蛇。</p>
+                <p style="text-align: right;">[ 文件已自动加密 ]</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="goBack()" style="background: #333; color: #fff; border: none; padding: 10px 20px; cursor: pointer;">返回论坛</button>
+        </div>
+    </div>
+
+    <script>
+        let currentStudentId = "";
+
+        function fakeLogin() {
+            var user = document.getElementById("username").value;
+            if (user.trim() === "") {
+                alert("请输入学号！");
+                return;
+            }
+            currentStudentId = user; 
+            
+            var btn = document.querySelector('.login-box button');
+            btn.innerText = "认证中...";
+            
+            setTimeout(function() {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('forumPage').style.display = 'block';
+                document.getElementById('userDisplay').innerText = "👤 学号: " + user + " (已登录)";
+            }, 800); 
+        }
+
+        function goToHackerPage() {
+            document.getElementById('forumPage').style.display = 'none';
+            document.getElementById('hackerPage').style.display = 'block';
+            window.scrollTo(0, 0); 
+        }
+
+        function goBack() {
+            document.getElementById('hackerPage').style.display = 'none';
+            document.getElementById('forumPage').style.display = 'block';
+        }
+
+        function verifyPwd() {
+            var pwd = document.getElementById('secretPwd').value.trim();
+            var expectedPwd = currentStudentId.slice(-4); 
+            
+            if (expectedPwd.length < 4) {
+                alert("警告：您的学号不足 4 位，无法进行身份校验。请重新登录！");
+                return;
+            }
+
+            if (pwd === expectedPwd) {
+                document.getElementById('secretData').style.display = 'block';
+            } else {
+                alert("访问被拒绝！学号后四位不匹配。您的IP已被监控。");
+            }
+        }
+    </script>
+</body>
+</html>
